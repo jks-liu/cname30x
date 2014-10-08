@@ -9,7 +9,8 @@
             [ring.adapter.jetty :as jetty]
             [ring.middleware.basic-authentication :as basic]
             [cemerick.drawbridge :as drawbridge]
-            [environ.core :refer [env]]))
+            [environ.core :refer [env]]
+            [ring.util.response :refer [redirect]]))
 
 (defn- authenticated? [user pass]
   ;; TODO: heroku config:add REPL_USER=[...] REPL_PASSWORD=[...]
@@ -23,10 +24,12 @@
 (defroutes app
   (ANY "/repl" {:as req}
        (drawbridge req))
-  (GET "/" []
+  (GET "/" {{host "host" :as headers} :headers}
        {:status 200
         :headers {"Content-Type" "text/plain"}
-        :body (pr-str ["Hello" :from 'Heroku])})
+        :body host})
+  (GET "/test" {params :params} (str "<h1>Hello World</h1>" (pr-str params)))
+  (GET "/t1" [] (redirect "http://baidu.com"))
   (ANY "*" []
        (route/not-found (slurp (io/resource "404.html")))))
 

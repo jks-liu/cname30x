@@ -11,8 +11,12 @@
                  [environ "0.5.0"]
                  [com.cemerick/drawbridge "0.0.6"]]
   :min-lein-version "2.0.0"
-  :plugins [[environ/environ.lein "0.2.1"]]
+  :plugins [[environ/environ.lein "0.2.1"]
+            ; [lein-ring "0.8.12"]
+            ]
   :hooks [environ.leiningen.hooks]
   :uberjar-name "cname30x-standalone.jar"
   :profiles {:production {:env {:production true}}}
-  :main cname30x.web)
+  :main cname30x.web
+  ; :ring {:handler cname30x.web/wrap-app}
+  )
