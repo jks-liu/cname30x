@@ -14,4 +14,5 @@
   :plugins [[environ/environ.lein "0.2.1"]]
   :hooks [environ.leiningen.hooks]
   :uberjar-name "cname30x-standalone.jar"
-  :profiles {:production {:env {:production true}}})
+  :profiles {:production {:env {:production true}}}
+  :main cname30x.web)
